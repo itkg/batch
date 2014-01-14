@@ -1,0 +1,26 @@
+{
+    "name":         "itkg/batch",
+    "type":         "library",
+    "description":  "Itkg batch helper library",
+    "keywords":     ["library", "batch", "itkg", "interakting"],
+    "homepage":     "http://github.com/itkg/batch",
+    "license":      "MIT",
+    "authors":      [
+        {
+            "name":     "Interakting",
+            "email":    "itkg@interakting.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/process": "v2.4.1"
+    },
+    "autoload": {
+        "psr-0": {
+            "Itkg\\Batch": "src"
+        }
+    }
+}
