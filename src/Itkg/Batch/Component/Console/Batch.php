@@ -3,7 +3,8 @@
 namespace Itkg\Batch\Component\Console;
 
 use Itkg\Batch\Component\Console;
-
+use Itkg\Log\IdGenerator;
+use Itkg\Batch\Factory;
 /**
  * Classe Batch
  *
@@ -57,14 +58,14 @@ class Batch extends Console
 
         // On récupère le batch (Permet de vérifier que le batch existe
         // et de récupérer sa configuration)
-        $this->batch = \Itkg\Batch\Factory::getBatch($this->name);
+        $this->batch = Factory::getBatch($this->name);
 
         // Initialisation de la configuration
         $this->getConfiguration();
 
         // Initialisation de l'ID qui sera utilisé tout au long du process
         $this->setId(
-            \Itkg\Log\IdGenerator::generate().' - '.
+            IdGenerator::generate().' - '.
             $this->getConfiguration()->getIdentifier().
             $this->batch->getConfiguration()->getIdentifier().' '
         );

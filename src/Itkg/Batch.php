@@ -42,6 +42,13 @@ abstract class Batch
      * @var string 
      */
     protected $id;
+
+    /**
+     * Batch config container
+     *
+     * @var array
+     */
+    public static $config;
     
     /**
      * Méthode d'initialisation d'un batch

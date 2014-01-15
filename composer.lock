@@ -3,8 +3,54 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "02f36efac4acdcbfcf246b78eb8a1a88",
+    "hash": "1f0be97e63a792411144040eaa29ee1f",
     "packages": [
+        {
+            "name": "itkg/log",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/itkg/log.git",
+                "reference": "9086f0b5e8f5127b9a2061c34a196c71030f5732"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/itkg/log/zipball/9086f0b5e8f5127b9a2061c34a196c71030f5732",
+                "reference": "9086f0b5e8f5127b9a2061c34a196c71030f5732",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Itkg\\Log": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Interakting",
+                    "email": "itkg@interakting.com"
+                }
+            ],
+            "description": "Itkg log library",
+            "homepage": "http://github.com/itkg/log",
+            "keywords": [
+                "interakting",
+                "itkg",
+                "library",
+                "log"
+            ],
+            "time": "2014-01-14 16:15:50"
+        },
         {
             "name": "symfony/process",
             "version": "v2.4.1",
@@ -300,16 +346,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "3.7.28",
+            "version": "3.7.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "3b97c8492bcafbabe6b6fbd2ab35f2f04d932a8d"
+                "reference": "faeb2d9f15dc83830d2db5e4c67acf1d68c9b5ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3b97c8492bcafbabe6b6fbd2ab35f2f04d932a8d",
-                "reference": "3b97c8492bcafbabe6b6fbd2ab35f2f04d932a8d",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/faeb2d9f15dc83830d2db5e4c67acf1d68c9b5ac",
+                "reference": "faeb2d9f15dc83830d2db5e4c67acf1d68c9b5ac",
                 "shasum": ""
             },
             "require": {
@@ -370,7 +416,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2013-10-17 07:27:40"
+            "time": "2014-01-15 06:46:38"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -473,9 +519,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "itkg/log": 20
+    },
     "platform": {
         "php": ">=5.3.3"
     },

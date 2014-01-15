@@ -49,21 +49,9 @@ abstract class Console
     {
         // Initialisation des loggers
         $this->getConfiguration()->initLoggers();
+        // Initialisation du process
+        $this->createProcess();
 
-        // Récupération du script à exécuter
-        $script = $this->getScript();
-	
-        // initialisation du process
-        $this->process = new PhpProcess(
-            $script,
-            $this->getConfiguration()->getCwd(),
-            $this->getConfiguration()->getEnv(),
-            $this->getConfiguration()->getTimeout()
-        );
-
-        if($this->configuration->getParameter('PHP_BINARY')) {
-            $this->process->setPhpBinary($this->configuration->getParameter('PHP_BINARY'));
-        }
         try {
             // Lancement du process
             $this->process->run(function ($type, $buffer) {
@@ -102,8 +90,8 @@ abstract class Console
     public function getConfiguration()
     {
         if(!is_object($this->configuration)) {
-            if(isset(\Itkg::$config['BATCH_CONFIGURATION']) && class_exists(\Itkg::$config['BATCH_CONFIGURATION'])) {
-                $this->configuration = new \Itkg::$config['BATCH_CONFIGURATION'];
+            if(isset(\Itkg\Batch::$config['CONFIGURATION']) && class_exists(\Itkg\Batch::$config['CONFIGURATION'])) {
+                $this->configuration = new \Itkg\Batch::$config['CONFIGURATION'];
             }else {
                 $this->configuration = new \Itkg\Component\Console\Configuration();
             }
@@ -159,6 +147,24 @@ abstract class Console
     public function setMessage($message)
     {
         $this->message = $message;
+    }
+
+    /**
+     * Create process
+     */
+    protected function createProcess()
+    {
+        // initialisation du process
+        $this->process = new PhpProcess(
+            $this->getScript(),
+            $this->getConfiguration()->getCwd(),
+            $this->getConfiguration()->getEnv(),
+            $this->getConfiguration()->getTimeout()
+        );
+
+        if($this->configuration->getParameter('PHP_BINARY')) {
+            $this->process->setPhpBinary($this->configuration->getParameter('PHP_BINARY'));
+        }
     }
 
     /**
