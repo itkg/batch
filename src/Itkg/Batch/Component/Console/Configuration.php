@@ -12,52 +12,49 @@ use Itkg\Batch\Configuration as BaseConfiguration;
 class Configuration extends BaseConfiguration
 {
     /**
-     * Chaine de caractère représentant un include path
+     * Include path as string var
      *
      * @var string
      */
     protected $includePath;
 
     /**
-     * Liste d'includes
+     * Include list
      *
      * @var array
      */
     protected $includes;
 
     /**
-     * Variables d'environnements
+     * Environment variables
      *
      * @var array
      */
     protected $env;
 
     /**
-     * Répertoire d'execution
+     * Execution directory
      *
      * @var type
      */
     protected $cwd;
 
     /**
-     * timeout du script
-     * Doit être initialisé à 0 pour supprimer le timeout
-     * Valeur par défaut : 60 secondes
+     * Script timeout
+     * Default 60s, 0 = infiny
      *
      * @var int
      */
     protected $timeout;
 
     /**
-     * Liste de clés / valeurs utilisés pour surcharger
-     * la configuration de php.ini et modifiable via ini_set
-     *
+     * keys / values to override ini settings
      * @var array
      */
     protected $inis;
 
     /**
-     * Constructeur
+     * contrcutor
      */
     public function __construct()
     {
@@ -109,7 +106,7 @@ class Configuration extends BaseConfiguration
     }
 
     /**
-     * Ajoute un include à la pile
+     * Add an include to the stack
      *
      * @param array $include
      */
@@ -144,7 +141,8 @@ class Configuration extends BaseConfiguration
     }
 
     /**
-     * Ajoute une variable d'environnement à la pile
+     * Add env var to the stack
+     *
      * @param string $key
      * @param string $value
      */
@@ -186,7 +184,7 @@ class Configuration extends BaseConfiguration
 
     /**
      * Setter timeout
-     * 0 = illimité
+     * 0 = infiny
      *
      * @param int $timeout
      */
@@ -196,7 +194,7 @@ class Configuration extends BaseConfiguration
     }
 
     /**
-     * Getter inis
+     * Getter ini set config
      *
      * @return array
      */
@@ -209,7 +207,7 @@ class Configuration extends BaseConfiguration
     }
 
     /**
-     * Setter inis
+     * Setter ini set config
      *
      * @param array $inis
      */
@@ -219,7 +217,7 @@ class Configuration extends BaseConfiguration
     }
 
     /**
-     * Ajoute un paramètre de configuration à la pile
+     * Add ini setting
      *
      * @param string $key
      * @param string $value
@@ -231,6 +229,11 @@ class Configuration extends BaseConfiguration
     }
 
 
+    /**
+     * Render include path (for additional path)
+     *
+     * @return string
+     */
     public function renderIncludePathAsAscript()
     {
         $includePath = '';
@@ -243,20 +246,32 @@ class Configuration extends BaseConfiguration
         return $includePath;
     }
 
+    /**
+     * Render env variable
+     *
+     * @return string
+     */
     public function renderEnvAsScript()
     {
-	$env = '';
+        $env = '';
 
-	if(is_array($this->getEnv())) {
-        if(is_array($_ENV)) {
-            $this->env = array_merge($_ENV, $this->env);
-            foreach($this->env as $key => $value) {
-                $env .= '$_ENV[\''.$key.'\'] = \''.$value.'\';';
+        if(is_array($this->getEnv())) {
+            if(is_array($_ENV)) {
+                $this->env = array_merge($_ENV, $this->env);
+                foreach($this->env as $key => $value) {
+
+                    $env .= '$_ENV[\''.$this->escapeVar($key).'\'] = \''.$this->escapeVar($value).'\';';
+                }
             }
         }
-	}
-	return $env;
+        return $env;
     }
+
+    /**
+     * Render necessaries includes
+     *
+     * @return string
+     */
     public function renderIncludesAsAscript()
     {
         $includes = '';
@@ -267,13 +282,29 @@ class Configuration extends BaseConfiguration
         return $includes;
     }
 
+    /**
+     * Render ini set config
+     *
+     * @return string
+     */
     public function renderInisAsScript()
     {
         $inis = '';
         foreach($this->getInis() as $key =>  $value) {
-            $inis .= 'ini_set(\''.$key.'\', '.$value.');';
+            $inis .= 'ini_set(\''.$this->escapeVar($key).'\', '.$this->escapeVar($value).');';
         }
 
         return $inis;
+    }
+
+    /**
+     * Escape a var
+     *
+     * @param string $var
+     * @return string
+     */
+    protected function escapeVar($var)
+    {
+        return str_replace("'", "\\'", $var);
     }
 }
