@@ -2,6 +2,8 @@
 
 namespace Itkg\Batch;
 
+use Itkg\Log\Factory as LogFactory;
+
 /**
  * Classe Configuration
  *

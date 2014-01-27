@@ -7,7 +7,7 @@ require_once(__DIR__.'/../vendor/autoload.php');
 if(empty($argv) || sizeof($argv) < 2) {
     echo "Aucune commande fournie\n";
     echo "php app/console command args\n";
-    exit();
+    return;
 }
 
 $command = ucFirst($argv[1]);
@@ -23,5 +23,5 @@ if(class_exists($class)) {
     // Si la commande est inconnue 
     echo "Commande fournie invalide\n";
     echo "php app/console command args\n";
-    exit();
+    return;
 }

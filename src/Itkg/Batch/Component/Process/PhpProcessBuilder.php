@@ -2,6 +2,8 @@
 
 namespace Itkg\Batch\Component\Process;
 
+use Symfony\Component\Process\Exception\LogicException;
+use Symfony\Component\Process\PhpProcess;
 use Symfony\Component\Process\ProcessBuilder;
 
 /**

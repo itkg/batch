@@ -2,8 +2,6 @@
 
 namespace Itkg\Batch;
 
-use Itkg\Exception\NotFoundException;
-
 /**
  * Classe de création des Batch
  * Génère un batch et l'initialise gràce aux paramêtres définis 
