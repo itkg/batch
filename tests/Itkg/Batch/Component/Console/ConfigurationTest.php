@@ -70,7 +70,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase  {
       $this->object->setEnv(array("myprop"=> "myval"));
       $_ENV["test3"] = "value3";
       
-      $stringtotest="\$_ENV['test3'] = 'value3';\$_ENV['myprop'] = 'myval';";
+      $stringtotest="_ENV['myprop'] = 'myval';";
       $env = $this->object->renderEnvAsScript();
       $this->assertTrue(strpos($env, $stringtotest)>0);
     }   
