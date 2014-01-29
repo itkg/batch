@@ -53,6 +53,7 @@ class State
     /**
      * Getter exception
      * 
+     * @codeCoverageIgnore
      * @return \Exception|null
      */
     public function getException()
@@ -63,6 +64,7 @@ class State
     /**
      * Getter status
      * 
+     * @codeCoverageIgnore
      * @return int
      */
     public function getStatus()
@@ -73,6 +75,7 @@ class State
     /**
      * Getter date
      * 
+     * @codeCoverageIgnore
      * @return \DateTime
      */
     public function getDate()
@@ -91,6 +94,7 @@ class State
     /**
      * Getter end
      * 
+     * @codeCoverageIgnore
      * @return int
      */
     public function getEnd()
@@ -101,6 +105,7 @@ class State
     /**
      * Getter start 
      * 
+     * @codeCoverageIgnore
      * @return int
      */
     public function getStart()
@@ -111,6 +116,7 @@ class State
     /**
      * Setter date
      * 
+     * @codeCoverageIgnore
      * @param \DateTime $datetime
      */
     public function setDate(\DateTime $datetime) 
@@ -134,6 +140,7 @@ class State
     /**
      * Setter status
      * 
+     * @codeCoverageIgnore
      * @param int $status
      */
     public function setStatus($status)
@@ -144,6 +151,7 @@ class State
     /**
      * Setter start
      * 
+     * @codeCoverageIgnore
      * @param int $start
      */
     public function setStart($start) 
@@ -154,6 +162,7 @@ class State
     /**
      * Setter end
      * 
+     * @codeCoverageIgnore
      * @param int $end
      */
     public function setEnd($end)

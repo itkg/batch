@@ -17,5 +17,6 @@ class Configuration extends BaseConfiguration
         
         $this->getLoggers();
         $this->loggers[] = array('writer' => 'echo');
+        $this->parameters = array();
     }
 }

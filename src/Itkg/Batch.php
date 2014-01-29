@@ -48,7 +48,25 @@ abstract class Batch
      *
      * @var array
      */
-    public static $config;
+    public static $config = array(
+        'LOG_PATH'          => '/var/logs',
+        'DEFAULT_WRITER'    => 'echo',
+        'DEFAULT_FORMATTER' => 'string',
+        'TEMP_ROOT'         => '/tmp',
+        'WRITERS'           => array(
+            'syslog'    => 'Itkg\Log\Writer\SysLogWriter',
+            'error_log' => 'Itkg\Log\Writer\ErrorLogWriter',
+            'echo'      => 'Itkg\Log\Writer\EchoWriter',
+            'soap'      => 'Itkg\Log\Writer\SoapWriter',
+            'file'      => 'Itkg\Log\Writer\FileWriter'
+        ),
+        'FORMATTERS'        => array(
+            'simple' => 'Itkg\Log\Formatter\SimpleFormatter',
+            'string' => 'Itkg\Log\Formatter\StringFormatter',
+            'xml'    => 'Itkg\Log\Formatter\XMLFormatter'
+        ),
+
+    );
     
     /**
      * Méthode d'initialisation d'un batch
@@ -100,6 +118,7 @@ abstract class Batch
     protected abstract function execute();
     
     /**
+     * @codeCoverageIgnore
      * Déclenche l'ensemble des notifiers
      */
     protected function notify()
@@ -110,6 +129,7 @@ abstract class Batch
     }
     
     /**
+     * @codeCoverageIgnore
      * Déclenche l'ensemble des loggers
      */
     protected function report()
@@ -156,7 +176,7 @@ abstract class Batch
     
     /**
      * Getter state
-     * 
+     * @codeCoverageIgnore
      * @return \Itkg\Batch\State
      */
     public function getState()
@@ -166,7 +186,7 @@ abstract class Batch
     
     /**
      * Setter state
-     * 
+     * @codeCoverageIgnore
      * @param \Itkg\Batch\State $state
      */
     public function setState(\Itkg\Batch\State $state = null) 
@@ -194,7 +214,7 @@ abstract class Batch
     
     /**
      * Getter Id
-     * 
+     * @codeCoverageIgnore
      * @return string
      */
     public function getId()
@@ -204,7 +224,7 @@ abstract class Batch
     
     /**
      * Setter Id
-     * 
+     * @codeCoverageIgnore
      * @param string $id
      */
     public function setId($id)
@@ -213,7 +233,7 @@ abstract class Batch
     }
     /**
      * Getter message
-     * 
+     * @codeCoverageIgnore
      * @return string
      */
     public function getMessage()
@@ -223,7 +243,7 @@ abstract class Batch
     
     /**
      * Setter message
-     * 
+     * @codeCoverageIgnore
      * @param string $message
      */
     public function setMessage($message)

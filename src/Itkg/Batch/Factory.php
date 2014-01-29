@@ -26,7 +26,7 @@ class Factory
         $oBatch = null;
 
         // Instanciation du batch par définition si celle-ci existe
-        if(isset(\Itkg::$config[$batch]['class'])) {
+        if(isset(\Itkg\Batch::$config[$batch]['class'])) {
             $oBatch = new \Itkg\Batch::$config[$batch]['class'];
             $sBatchClass = \Itkg\Batch::$config[$batch]['class'];
         }else {

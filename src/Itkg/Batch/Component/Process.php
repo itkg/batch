@@ -1,6 +1,6 @@
 <?php
 
-namespace Itkg\Component;
+namespace Itkg\Batch\Component;
 
 use Symfony\Component\Process\Process as BaseProcess;
 
