@@ -63,7 +63,7 @@ class Configuration extends BaseConfiguration
 
     /**
      * Getter includePath
-     *
+     * @codeCoverageIgnore
      * @return string
      */
     public function getIncludePath()
@@ -73,7 +73,7 @@ class Configuration extends BaseConfiguration
 
     /**
      * Setter includePath
-     *
+     * @codeCoverageIgnore
      * @param string $includePath
      */
     public function setIncludePath($includePath)
@@ -83,7 +83,7 @@ class Configuration extends BaseConfiguration
 
     /**
      * Getter includes
-     *
+     * @codeCoverageIgnore
      * @return array
      */
     public function getIncludes()
@@ -97,7 +97,7 @@ class Configuration extends BaseConfiguration
 
     /**
      * Setter includes
-     *
+     * @codeCoverageIgnore
      * @param array $includes
      */
     public function setIncludes(array $includes = array())
@@ -132,7 +132,7 @@ class Configuration extends BaseConfiguration
 
     /**
      * Setter env
-     *
+     * @codeCoverageIgnore
      * @param array $env
      */
     public function setEnv(array $env = array())
@@ -154,7 +154,7 @@ class Configuration extends BaseConfiguration
 
     /**
      * Getter cwd
-     *
+     * @codeCoverageIgnore
      * @return string
      */
     public function getCwd()
@@ -164,7 +164,7 @@ class Configuration extends BaseConfiguration
 
     /**
      * Setter cwd
-     *
+     * @codeCoverageIgnore
      * @param string $cwd
      */
     public function setCwd($cwd)
@@ -174,7 +174,7 @@ class Configuration extends BaseConfiguration
 
     /**
      * Getter timeout
-     *
+     * @codeCoverageIgnore
      * @return int
      */
     public function getTimeout()
@@ -185,7 +185,7 @@ class Configuration extends BaseConfiguration
     /**
      * Setter timeout
      * 0 = infiny
-     *
+     * @codeCoverageIgnore
      * @param int $timeout
      */
     public function setTimeout($timeout)
@@ -208,7 +208,7 @@ class Configuration extends BaseConfiguration
 
     /**
      * Setter ini set config
-     *
+     * @codeCoverageIgnore
      * @param array $inis
      */
     public function setInis(array $inis = array())
@@ -299,7 +299,7 @@ class Configuration extends BaseConfiguration
 
     /**
      * Escape a var
-     *
+     * @codeCoverageIgnore
      * @param string $var
      * @return string
      */

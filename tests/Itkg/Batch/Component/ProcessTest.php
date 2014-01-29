@@ -1,22 +1,17 @@
 <?php
-
 namespace Itkg\Batch\Component;
 
-
 /**
- * Classe Process
+ * Class de test Process
  *
- * Cette classe permet de gérer les commandes systèmes 
- * de traiter les erreurs, d'obtenir un rapport complet sur les différentes commandes
- * exécutées
- * 
- * @author Pascal DENIS <pascal.denis@businessdecision.com>
+ * @author Jean-Baptiste ROUSSEAU <jean-baptiste.rousseau@businessdecision.com>
+ *
+ * @package Itkg\Batch\Component
  */
 class ProcessTest extends \PHPUnit_Framework_TestCase
 {
      /**
-
-     * @var Itkg\Configuration
+     * @var Itkg\Batch\Component\Process
      */
     protected $object;
 
@@ -30,7 +25,7 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * Get parameters
+     * __construct
      *
      * @covers Itkg\Batch\Component\Process::__construct
      */

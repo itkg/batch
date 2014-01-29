@@ -43,6 +43,7 @@ class Batch extends Console
     /**
      * Constructeur
      *
+     * @codeCoverageIgnore
      * @param array $args
      * @throws \Itkg\Exception\NotFoundException
      */
@@ -50,7 +51,7 @@ class Batch extends Console
     {
         // Si aucun argument n'est passé, on lève une exception
         if(empty($args)) {
-            throw new \Itkg\Exception\NotFoundException('Le nom du batch n\'a pas été renseigné');
+            throw new \Exception('Le nom du batch n\'a pas été renseigné');
         }
 
         // On récupère la clé du batch
@@ -73,7 +74,7 @@ class Batch extends Console
 
     /**
      * Getter name
-     *
+     * @codeCoverageIgnore
      * @return string
      */
     public function getName()
@@ -83,7 +84,7 @@ class Batch extends Console
 
     /**
      * Setter name
-     *
+     * @codeCoverageIgnore
      * @param string $name
      */
     public function setName($name)
@@ -93,7 +94,7 @@ class Batch extends Console
 
     /**
      * Getter ID
-     *
+     * @codeCoverageIgnore
      * @return string
      */
     public function getId()
@@ -103,7 +104,7 @@ class Batch extends Console
 
     /**
      * Setter ID
-     *
+     * @codeCoverageIgnore
      * @param string $id
      */
     public function setId($id)
@@ -113,7 +114,7 @@ class Batch extends Console
 
     /**
      * Retourne le script à executer
-     *
+     * @codeCoverageIgnore
      * @return string
      */
     protected function getScript()

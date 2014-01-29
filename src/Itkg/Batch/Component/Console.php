@@ -11,6 +11,7 @@ use \Symfony\Component\Process\PhpProcess;
  * via un process PHP interne
  *
  * @author Pascal DENIS <pascal.denis@businessdecision.com>
+ * @codeCoverageIgnore
  */
 abstract class Console
 {
@@ -93,7 +94,7 @@ abstract class Console
             if(isset(\Itkg\Batch::$config['CONFIGURATION']) && class_exists(\Itkg\Batch::$config['CONFIGURATION'])) {
                 $this->configuration = new \Itkg\Batch::$config['CONFIGURATION'];
             }else {
-                $this->configuration = new \Itkg\Component\Console\Configuration();
+                $this->configuration = new \Itkg\Batch\Component\Console\Configuration();
             }
         }
         return $this->configuration;
@@ -102,9 +103,9 @@ abstract class Console
     /**
      * Setter configuration
      *
-     * @param \Itkg\Component\Console\Configuration $configuration
+     * @param \Itkg\Batch\Component\Console\Configuration $configuration
      */
-    public function setConfiguration(\Itkg\Component\Console\Configuration $configuration)
+    public function setConfiguration(\Itkg\Batch\Component\Console\Configuration $configuration)
     {
         $this->configuration = $configuration;
     }

@@ -1,16 +1,14 @@
 <?php
 namespace Itkg\Batch\Component\Console;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
- * Description of ConfigurationTest
+ * Class de test Factory
  *
- * @author glenormand
+ * @author Jean-Baptiste ROUSSEAU <jean-baptiste.rousseau@businessdecision.com>
+ *
+ * @package \Itkg\Batch
  */
-class ConfigurationTest  {
+class ConfigurationTest extends \PHPUnit_Framework_TestCase  {
 
     protected $object;
 
@@ -20,7 +18,7 @@ class ConfigurationTest  {
      */
     protected function setUp()
     {
-        $this->object = new \Itkg\Batch\Configuration();
+        $this->object = new \Itkg\Batch\Component\Console\Configuration();
         $this->object->setIdentifier("[BULK BATCH]");
     }
 
@@ -33,237 +31,106 @@ class ConfigurationTest  {
     }
 
     /**
-     * Get parameters
+     * __construct
      *
-     * @covers Itkg\Configuration::getParameters
+     * @covers Itkg\Batch\Component\Console\Configuration::__construct
      */
-    public function testGetParameters()
+    public function test__construct()
     {
-        $this->assertNotNull($this->object->getParameters());
+
+      $this->assertEquals(60, $this->object->getTimeout());
     }
-
+    
     /**
-     * Set parameters
      *
-     * @covers Itkg\Configuration::setParameters
+     * @covers Itkg\Batch\Component\Console\Configuration::renderInisAsScript
      */
-    public function testSetParameters()
+    public function testRenderInisAsScript()
     {
-        $parameters = array('PARAMETER_ONE' => 'ONE');
-        $this->object->setParameters($parameters);
-        $this->assertEquals($parameters, $this->object->getParameters());
+      $this->object->setInis(array("myprop"=> "myval'"));
+      $this->assertEquals("ini_set('myprop', myval\');", $this->object->renderInisAsScript());
     }
-
-    /**
-     * Renvoi un paramètre par son nom ou false si le paramètre n'existe pas
+    
+     /**
      *
-     * @covers Itkg\Configuration::getParameter
+     * @covers Itkg\Batch\Component\Console\Configuration::renderIncludesAsAscript
      */
-    public function testGetParameter()
+    public function testRenderIncludesAsAscript()
     {
-        $parameters = array('PARAMETER_ONE' => 'ONE');
-        $this->object->setParameters($parameters);
-
-        $this->assertEquals('ONE', $this->object->getParameter('PARAMETER_ONE'));
-        $this->assertEquals(false, $this->object->getParameter('UNKNOWN_PARAMETER'));
-    }
-
+      $this->object->setIncludes(array("myval"));
+      $this->assertEquals("require_once('myval');", $this->object->renderIncludesAsAscript());
+    }   
     /**
-     * Ajoute la liste de paramètres à la liste courante
+     * __construct
      *
-     * @covers Itkg\Configuration::loadParameters
+     * @covers Itkg\Batch\Component\Console\Configuration::renderEnvAsScript
      */
-    public function testLoadParameters()
+    public function testRenderEnvAsScript()
     {
-        $parameters = array('PARAMETER_ONE' => 'ONE');
-        $this->object->setParameters($parameters);
-
-        $parametersTwo = array('PARAMETER_TWO' => 'TWO');
-        $this->object->loadParameters($parametersTwo);
-
-        $this->assertEquals(
-            array_merge($parameters, $parametersTwo),
-            $this->object->getParameters()
-        );
-    }
-
+      $this->object->setEnv(array("myprop"=> "myval"));
+      $_ENV["test3"] = "value3";
+      
+      $stringtotest="\$_ENV['test3'] = 'value3';\$_ENV['myprop'] = 'myval';";
+      $env = $this->object->renderEnvAsScript();
+      $this->assertTrue(strpos($env, $stringtotest)>0);
+    }   
+     /**
+     *
+     * @covers Itkg\Batch\Component\Console\Configuration::renderIncludePathAsAscript
+     */
+    public function testRenderIncludePathAsAscript()
+    {
+      $this->object->setIncludePath("test");
+      $this->assertEquals("set_include_path(get_include_path().':test');", $this->object->renderIncludePathAsAscript());
+    }      
+    
+     /**
+     *
+     * @covers Itkg\Batch\Component\Console\Configuration::getInis
+     */
+    public function testGetInis()
+    {
+      $this->assertInternalType("array", $this->object->getInis());
+    }    
     /**
-     * Getter identifier
      *
-     * @covers Itkg\Configuration::getIdentifier
+     * @covers Itkg\Batch\Component\Console\Configuration::getEnv
      */
-    public function testGetIdentifier()
+    public function testGetEnv()
     {
-        $this->assertNotNull($this->object->getIdentifier());
-    }
-
-    /**
-     * Setter identifier
+      $this->assertInternalType("array", $this->object->getEnv());
+    } 
+    
+        /**
      *
-     * @covers Itkg\Configuration::setIdentifier
+     * @covers Itkg\Batch\Component\Console\Configuration::addInclude
      */
-    public function testSetIdentifier()
+    public function testAddInclude()
     {
-        $identifier = 'identifier';
-        $this->object->setIdentifier($identifier);
-        $this->assertEquals($identifier, $this->object->getIdentifier());
-    }
-
-    /**
-     * Ajout d'un logger à la pile
+      $this->object->addInclude("test");
+      $this->assertInternalType("array", $this->object->getIncludes());
+      $this->assertEquals(1, count($this->object->getIncludes()));
+    } 
+            /**
      *
-     * @covers Itkg\Configuration::addLogger
+     * @covers Itkg\Batch\Component\Console\Configuration::addEnv
      */
-    public function testAddLogger()
+    public function testAddEnv()
     {
-        $logger = \Itkg\Log\Factory::getWriter('echo');
-        $nbLogger = sizeof($this->object->getLoggers());
-        $this->object->addLogger($logger);
-        $this->assertEquals(($nbLogger+1), sizeof($this->object->getLoggers()));
-    }
-
-    /**
-     * Formate la liste des loggers si ceux-ci sont sous forme de tableaux
-     * et non d'objets
-     *
-     * @covers Itkg\Configuration::initLoggers
-     */
-    public function testInitLoggers()
-    {
-        $loggers = array(array('writer' => 'echo'));
-        $this->object->setLoggers($loggers);
-
-
-        $this->object->initLoggers();
-        $finalLoggers = $this->object->getLoggers();
-        $this->assertEquals(get_class($finalLoggers[0]), 'Itkg\Log\Writer\EchoWriter');
-
-        $loggers = array(array('writer' => 'file'));
-        $this->object->setLoggers($loggers);
-
-        $this->object->initLoggers();
-        $finalLoggers = $this->object->getLoggers();
-        $this->assertEquals(get_class($finalLoggers[0]), 'Itkg\Log\Writer\FileWriter');
-
-
-        $loggers = array(\Itkg\Log\Factory::getWriter('file'));
-        $this->object->setLoggers($loggers);
-        $this->object->initLoggers();
-        $finalLoggers = $this->object->getLoggers();
-        $this->assertEquals(get_class($finalLoggers[0]), 'Itkg\Log\Writer\FileWriter');
-
-        $loggers = array();
-        $this->object->setLoggers($loggers);
-        $this->object->initLoggers();
-        $this->assertEquals(array(), $this->object->getLoggers());
-
-        $loggers = array(array());
-        $this->object->setLoggers($loggers);
-        $this->object->initLoggers();
-        $finalLoggers = $this->object->getLoggers();
-        $this->assertEquals(get_class($finalLoggers[0]), \Itkg::$config['LOG']['WRITERS'][\Itkg::$config['LOG']['DEFAULT_WRITER']]);
-
-        $loggers = array(
-            array(
-                'writer' => 'file',
-                'formatter' => 'string',
-                'parameters' => array(
-                    'file' => __DIR__.'/log.log'
-                )
-            )
-        );
-
-        $this->object->setLoggers($loggers);
-        $this->object->initLoggers();
-        $finalLoggers = $this->object->getLoggers();
-        $parameters = $finalLoggers[0]->getParameters();
-        $this->assertEquals(get_class($finalLoggers[0]->getFormatter()), 'Itkg\Log\Formatter\StringFormatter');
-        $this->assertEquals($parameters['file'], __DIR__.'/log.log');
-
-    }
-
-    /**
-     * Formate la liste des loggers si ceux-ci sont sous forme de tableaux
-     * et non d'objets
-     *
-     * @covers Itkg\Configuration::initLoggers
-     * @covers Itkg\Configuration::init
-     */
-    public function testInit()
-    {
-        $loggers = array(
-            array(
-                'writer' => 'file',
-                'formatter' => 'string',
-                'parameters' => array(
-                    'file' => __DIR__.'/log.log'
-                )
-            )
-        );
-
-        $this->object->setLoggers($loggers);
-        $this->object->init();
-        $finalLoggers = $this->object->getLoggers();
-        $parameters = $finalLoggers[0]->getParameters();
-        $this->assertEquals(get_class($finalLoggers[0]->getFormatter()), 'Itkg\Log\Formatter\StringFormatter');
-        $this->assertEquals($parameters['file'], __DIR__.'/log.log');
+      $this->object->addEnv("test", "value");
+      $this->assertInternalType("array", $this->object->getEnv());
+      $this->assertEquals(1, count($this->object->getEnv()));
     }
     /**
-     * Getter loggers
      *
-     * @covers Itkg\Configuration::getLoggers
+     * @covers Itkg\Batch\Component\Console\Configuration::addIni
      */
-    public function testGetLoggers()
+    public function testAddIni()
     {
-        $this->assertNotNull($this->object->getLoggers());
-    }
-
-    /**
-     * Setter loggers
-     *
-     * @covers Itkg\Configuration::setLoggers
-     */
-    public function testSetLoggers()
-    {
-        $loggers = array(array('writer' => 'file'));
-        $this->object->setLoggers($loggers);
-
-        $this->assertEquals($loggers, $this->object->getLoggers());
-    }
-
-    /**
-     * Ajoute un notifier à la pile
-     *
-     * @covers Itkg\Configuration::addNotifier
-     */
-    public function testAddNotifier()
-    {
-        $nbNotifier = sizeof($this->object->getNotifiers());
-        $this->object->addNotifier(new \ItkgTest\Mock\MyNotifier());
-        $this->assertEquals(($nbNotifier+1), sizeof($this->object->getNotifiers()));
-    }
-
-    /**
-     * Getter notifiers
-     *
-     * @covers Itkg\Configuration::getNotifiers
-     */
-    public function testGetNotifiers()
-    {
-        $this->assertNotNull($this->object->getNotifiers());
-    }
-
-    /**
-     * Setter notifiers
-     *
-     * @covers Itkg\Configuration::setNotifiers
-     */
-    public function testSetNotifiers()
-    {
-        $notifiers = array(new \ItkgTest\Mock\MyNotifier());
-        $this->object->setNotifiers($notifiers);
-        $this->assertEquals($notifiers, $this->object->getNotifiers());
-    }
+      $this->object->addIni("test", "value");
+      $this->assertInternalType("array", $this->object->getInis());
+      $this->assertEquals(1, count($this->object->getInis()));
+    }    
 }
 
 ?>
