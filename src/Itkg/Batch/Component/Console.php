@@ -18,7 +18,7 @@ abstract class Console
     /**
      * Configuration de la console
      *
-     * @var \Itkg\Component\Console\Configuration
+     * @var \Itkg\Batch\Component\Console\Configuration
      */
     protected $configuration;
 
@@ -86,14 +86,16 @@ abstract class Console
     /**
      * Getter configuration
      *
-     * @return \Itkg\Component\Console\Configuration
+     * @return \Itkg\Batch\Component\Console\Configuration
      */
     public function getConfiguration()
     {
+
         if(!is_object($this->configuration)) {
             if(isset(\Itkg\Batch::$config['CONFIGURATION']) && class_exists(\Itkg\Batch::$config['CONFIGURATION'])) {
                 $this->configuration = new \Itkg\Batch::$config['CONFIGURATION'];
             }else {
+
                 $this->configuration = new \Itkg\Batch\Component\Console\Configuration();
             }
         }
@@ -155,6 +157,7 @@ abstract class Console
      */
     protected function createProcess()
     {
+
         // initialisation du process
         $this->process = new PhpProcess(
             $this->getScript(),

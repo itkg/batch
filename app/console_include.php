@@ -5,7 +5,7 @@
 // 
 // On s'assure que au moins un argument est présent (le libellé de la commande à exécuter)
 if(empty($argv) || sizeof($argv) < 2) {
-    echo "Aucune commande fournie\n";
+    echo "Please, provide a command\n";
     echo "php app/console command args\n";
     exit();
 }
@@ -13,7 +13,7 @@ if(empty($argv) || sizeof($argv) < 2) {
 $command = ucFirst($argv[1]);
 unset($argv[0]);
 unset($argv[1]);
-$class = 'Itkg\\Component\\Console\\'.$command;
+$class = 'Itkg\\Batch\\Component\\Console\\'.$command;
 
 if(class_exists($class)) {
     // Si la commande est connue, on execute le script
@@ -21,7 +21,7 @@ if(class_exists($class)) {
     $console->run(); 
 }else {
     // Si la commande est inconnue 
-    echo "Commande fournie invalide\n";
+    echo "Unknown command\n";
     echo "php app/console command args\n";
     exit();
 }

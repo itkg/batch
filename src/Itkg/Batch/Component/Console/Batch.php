@@ -43,7 +43,6 @@ class Batch extends Console
     /**
      * Constructeur
      *
-     * @codeCoverageIgnore
      * @param array $args
      * @throws \Itkg\Exception\NotFoundException
      */
@@ -74,7 +73,6 @@ class Batch extends Console
 
     /**
      * Getter name
-     * @codeCoverageIgnore
      * @return string
      */
     public function getName()
@@ -84,7 +82,6 @@ class Batch extends Console
 
     /**
      * Setter name
-     * @codeCoverageIgnore
      * @param string $name
      */
     public function setName($name)
@@ -94,7 +91,6 @@ class Batch extends Console
 
     /**
      * Getter ID
-     * @codeCoverageIgnore
      * @return string
      */
     public function getId()
@@ -104,7 +100,6 @@ class Batch extends Console
 
     /**
      * Setter ID
-     * @codeCoverageIgnore
      * @param string $id
      */
     public function setId($id)

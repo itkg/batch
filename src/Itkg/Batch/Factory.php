@@ -15,10 +15,10 @@ class Factory
     /**
      * Renvoi un batch dont la clé est passée en paramêtre
      * Charge l'ensemble de la configuration liée au batch
-     * 
+     *
      * @static
      * @param string $batch La clé du batch
-     * @param array $parameters La liste des paramêtres 
+     * @throws \UnexpectedValueException
      * @return \Itkg\Batch
      */
     public static function getBatch($batch) 
