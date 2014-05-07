@@ -114,6 +114,7 @@ class Batch extends Console
      */
     protected function getScript()
     {
+
         return
             '<?php
 		'.$this->getConfiguration()->renderEnvAsScript()
@@ -137,7 +138,7 @@ class Batch extends Console
                 $logger->setId($this->id);
             }
             
-            $logger->write($this->message);
+            $logger->addInfo($this->message);
         }
     }
 }

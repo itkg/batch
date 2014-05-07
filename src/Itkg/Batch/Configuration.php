@@ -124,47 +124,22 @@ abstract class Configuration
      *
      * @param \Itkg\Log\Writer $logger
      */
-    public function addLogger(\Itkg\Log\Writer $logger)
+    public function addLogger(\Itkg\Log\Logger $logger)
     {
         $this->getLoggers();
         $this->loggers[] = $logger;
     }
 
-    /**
-     * Formate la liste des loggers si ceux-ci sont sous forme de tableaux
-     * et non d'objets
-     */
-    public function initLoggers()
-    {
-        foreach($this->getLoggers() as $key => $logger) {
-            // Si logger n'est pas encore initialisé
-            if(is_array($logger)) {
-                // Si le logger existe
-                if(isset($logger['writer'])) {
-                    $writer = $logger['writer'];
-                }else {
-                    $writer = '';
-                }
-
-                // Si un formatage est défini
-                if(isset($logger['formatter'])) {
-                    $formatter = $logger['formatter'];
-                }else {
-                    $formatter = '';
-                }
-
-                // S'il y a des parametres
-                if(isset($logger['parameters'])) {
-                    $parameters = $logger['parameters'];
-                }else {
-                    $parameters = array();
-                }
-
-                // on insert le logger créé
-                $this->loggers[$key] = LogFactory::getWriter($writer, $formatter, $parameters);
-            }
-        }
-    }
+	/**
+	 * Formate la liste des loggers si ceux-ci sont sous forme de tableaux
+	 * et non d'objets
+	 */
+	public function initLoggers()
+	{
+		foreach ($this->getLoggers() as $key => $handler) {
+			$this->loggers[$key] = LogFactory::getLogger(array($handler));
+		}
+	}
 
     /**
      * Getter loggers

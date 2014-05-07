@@ -50,7 +50,6 @@ abstract class Batch
      */
     public static $config = array(
         'LOG_PATH'          => '/var/logs',
-        'DEFAULT_WRITER'    => 'echo',
         'DEFAULT_FORMATTER' => 'string',
         'TEMP_ROOT'         => '/tmp',
         'WRITERS'           => array(
