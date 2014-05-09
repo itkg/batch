@@ -6,6 +6,7 @@ namespace Itkg\Batch\Component\Console;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+use Itkg\Log\Handler\EchoHandler;
 
 /**
  * Classe BatchTest
@@ -25,6 +26,7 @@ class BatchTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        \Itkg\Log::$config['DEFAULT_HANDLER'] = new EchoHandler();
         \Itkg\Batch::$config['MY_BATCH']['PARAMETERS'] = array(
             'location' => 'http://MOCK_IP/mockservice',
             'signature' => 'http://MOCK_IP/signature',
@@ -74,9 +76,7 @@ class BatchTest extends \PHPUnit_Framework_TestCase
     {
         $script = "";
         $this->object = new Batch(array("MY_BATCH"));
-        $formatter = new \Itkg\Log\Formatter\StringFormatter;
-        $logger = new \Itkg\Log\Writer\EchoWriter($formatter);
-        $this->object->getConfiguration()->addLogger($logger, "test");
+        $this->object->getConfiguration()->addLogger(\Itkg\Log\Factory::getLogger(array(array('handler' => new EchoHandler()))), "test");
         $this->assertEquals($script, $this->object->report());
     }
 }

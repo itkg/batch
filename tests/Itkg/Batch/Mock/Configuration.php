@@ -3,6 +3,7 @@
 namespace Itkg\Batch\Mock;
 
 use Itkg\Component\Console\Configuration as BaseConfiguration;
+use Itkg\Log\Handler\EchoHandler;
 
 /**
  * Classe Configuration
@@ -23,10 +24,7 @@ class Configuration extends BaseConfiguration
         $this->setIncludes($includes);
         
         $this->loggers[] = array(
-            'writer' => 'file',
-            'parameters' => array(
-                'file' => '/tmp/batch.txt'
-            )
+            'handler' => new EchoHandler()
         );
     }
 }

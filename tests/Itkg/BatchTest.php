@@ -2,6 +2,8 @@
 
 namespace Itkg;
 
+use Itkg\Log\Handler\EchoHandler;
+
 /**
  * Classe pour les test phpunit pour la classe Batch
  *
@@ -24,7 +26,8 @@ class BatchTest extends \PHPUnit_Framework_TestCase
      * This method is called before a test is executed.
      */
     protected function setUp()
-    {         
+    {
+      \Itkg\Log::$config['DEFAULT_HANDLER'] = new EchoHandler();
       $this->object = new \Itkg\Batch\Mock\Hello();
       $this->object->setConfiguration(new \Itkg\Batch\Mock\Hello\Configuration());
     }

@@ -8,3 +8,5 @@ $loader->add('Itkg', array(
     __DIR__.'/../src',
     __DIR__.'/../tests'
 ));
+
+\Itkg\Log::$config['DEFAULT_HANDLER'] = new \Itkg\Log\Handler\EchoHandler();

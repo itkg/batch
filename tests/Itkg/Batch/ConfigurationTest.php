@@ -2,6 +2,10 @@
 
 namespace Itkg\Batch;
 
+use Itkg\Log\Formatter\StringFormatter;
+use Itkg\Log\Handler\EchoHandler;
+use Monolog\Handler\StreamHandler;
+
 /**
  * Classe pour les test phpunit de la classe Itkg\Configuration
  *
@@ -14,7 +18,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
     /**
 
-     * @var Itkg\Configuration
+     * @var \Itkg\Configuration
      */
     protected $object;
 
@@ -23,7 +27,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      * This method is called before a test is executed.
      */
     protected function setUp()
-    {         
+    {
       $this->object = new \Itkg\Batch\Mock\Hello\Configuration();
       $this->object->setIdentifier("[BULK BATCH]");
     }
@@ -120,7 +124,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddLogger()
     {
-        $logger = \Itkg\Log\Factory::getWriter('echo');
+        $logger = \Itkg\Log\Factory::getLogger(array(array('handler' => new EchoHandler())));
         $nbLogger = sizeof($this->object->getLoggers());
         $this->object->addLogger($logger);
         $this->assertEquals(($nbLogger+1), sizeof($this->object->getLoggers()));
@@ -134,50 +138,18 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testInitLoggers()
     {
-        $loggers = array(array('writer' => 'echo'));
+        $loggers = array(array('handler' => new EchoHandler()));
         $this->object->setLoggers($loggers);
         
       
         $this->object->initLoggers();
         $finalLoggers = $this->object->getLoggers();
-        $this->assertEquals(get_class($finalLoggers[0]), 'Itkg\Log\Writer\EchoWriter');
-        
-        $loggers = array(array('writer' => 'file'));
-        $this->object->setLoggers($loggers);
-        
-        $this->object->initLoggers();
-        $finalLoggers = $this->object->getLoggers();
-        $this->assertEquals(get_class($finalLoggers[0]), 'Itkg\Log\Writer\FileWriter');
-        
-        
-        $loggers = array(\Itkg\Log\Factory::getWriter('file'));
-        $this->object->setLoggers($loggers);
-        $this->object->initLoggers();
-        $finalLoggers = $this->object->getLoggers();
-        $this->assertEquals(get_class($finalLoggers[0]), 'Itkg\Log\Writer\FileWriter');
+        $this->assertEquals(get_class($finalLoggers[0]->popHandler()), 'Itkg\Log\Handler\EchoHandler');
         
         $loggers = array();
         $this->object->setLoggers($loggers);
         $this->object->initLoggers();
         $this->assertEquals(array(), $this->object->getLoggers());
-        
-        $loggers = array(
-            array(
-                'writer' => 'file', 
-                'formatter' => 'string',
-                'parameters' => array(
-                    'file' => __DIR__.'/log.log'
-                )
-            )
-        );
-        
-        $this->object->setLoggers($loggers);
-        $this->object->initLoggers();
-        $finalLoggers = $this->object->getLoggers();
-        $parameters = $finalLoggers[0]->getParameters();
-        $this->assertEquals(get_class($finalLoggers[0]->getFormatter()), 'Itkg\Log\Formatter\StringFormatter');
-        $this->assertEquals($parameters['file'], __DIR__.'/log.log');
-        
     }
         
     /**
@@ -189,22 +161,17 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testInit()
     {
-        $loggers = array(
-            array(
-                'writer' => 'file', 
-                'formatter' => 'string',
-                'parameters' => array(
-                    'file' => __DIR__.'/log.log'
-                )
-            )
-        );
+        $loggers = array((array(
+            'handler' => new StreamHandler('/tmp/test.log'),
+            'formatter' => new StringFormatter()
+        )));
         
         $this->object->setLoggers($loggers);
         $this->object->init();
         $finalLoggers = $this->object->getLoggers();
-        $parameters = $finalLoggers[0]->getParameters();
-        $this->assertEquals(get_class($finalLoggers[0]->getFormatter()), 'Itkg\Log\Formatter\StringFormatter');
-        $this->assertEquals($parameters['file'], __DIR__.'/log.log');
+        $handler = $finalLoggers[0]->popHandler();
+        $this->assertEquals(get_class($handler->getFormatter()), 'Itkg\Log\Formatter\StringFormatter');
+        $this->assertInstanceOf('Monolog\Handler\StreamHandler', $handler);
     }
     /**
      * Getter loggers

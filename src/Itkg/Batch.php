@@ -139,10 +139,8 @@ abstract class Batch
                 // L'identifiant de log est unique au sein de tous les loggers
                 $logger->setId($this->id);
             }
-            $logger->getFormatter()->setParameters(array(
-                'requestTime' => $this->state->getDuration()
-            ));
-            $logger->write($this->message);
+
+            $logger->addInfo($this->message, array('requestTime' => $this->state->getDuration()));
 
         }
     }

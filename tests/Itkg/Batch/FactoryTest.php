@@ -2,6 +2,7 @@
 namespace Itkg\Batch;
 
 use Itkg\Batch\Factory;
+use Itkg\Log\Handler\EchoHandler;
 
 /**
  * Class de test Factory
@@ -23,6 +24,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+
         $this->object = new Factory;
         \Itkg\Batch::$config['MY_BATCH']['PARAMETERS'] = array(
             'location' => 'http://MOCK_IP/mockservice',

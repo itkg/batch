@@ -3,6 +3,7 @@
 namespace Itkg\Batch\Mock\Hello;
 
 use Itkg\Batch\Configuration as BaseConfiguration;
+use Itkg\Log\Handler\EchoHandler;
 
 /**
  * Classe Configuration
@@ -16,7 +17,7 @@ class Configuration extends BaseConfiguration
         $this->identifier = '[HELLO]';
         
         $this->getLoggers();
-        $this->loggers[] = array('writer' => 'echo');
+        $this->loggers[] = array('handler' => new EchoHandler());
         $this->parameters = array();
     }
 }
