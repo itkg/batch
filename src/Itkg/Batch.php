@@ -135,12 +135,8 @@ abstract class Batch
     {
         // Tous les loggers vont écrire le résultat du batch
         foreach($this->configuration->getLoggers() as $logger) {
-            if($this->id) {
-                // L'identifiant de log est unique au sein de tous les loggers
-                $logger->setId($this->id);
-            }
 
-            $logger->addInfo($this->message, array('requestTime' => $this->state->getDuration()));
+            $logger->addInfo($this->message, array('id' => $this->id, 'requestTime' => $this->state->getDuration()));
 
         }
     }

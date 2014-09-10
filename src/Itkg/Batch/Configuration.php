@@ -137,7 +137,9 @@ abstract class Configuration
 	public function initLoggers()
 	{
 		foreach ($this->getLoggers() as $key => $handler) {
-			$this->loggers[$key] = LogFactory::getLogger(array($handler));
+
+    			$this->loggers[$key] = LogFactory::getLogger($handler);
+
 		}
 	}
 
