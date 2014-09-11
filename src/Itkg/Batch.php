@@ -83,8 +83,7 @@ abstract class Batch
         $this->init();
         
         // Initialisation des loggers
-        $this->getConfiguration()->initLoggers();
-        
+
         $exception = null;
         $start = microtime();
         
