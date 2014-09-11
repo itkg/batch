@@ -138,7 +138,7 @@ abstract class Configuration
 	{
 		foreach ($this->getLoggers() as $key => $handler) {
 
-    			$this->loggers[$key] = LogFactory::getLogger($handler);
+    			$this->loggers[$key] = LogFactory::getLogger(array($handler));
 
 		}
 	}
